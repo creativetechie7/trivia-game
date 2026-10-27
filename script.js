@@ -212,27 +212,48 @@
   // TASK C: Request a token from OpenTDB
   // ======================================================
   async function getToken() {
-    // TODO:
-    // - var res = await fetch(API.token)
-    // - if (!res.ok) throw Error(...)
-    // - var data = await res.json()
-    // - if (!data.token) throw Error(...)
-    // - return data.token
-    return null;
+    const res = await fetch(API.token);
+    if (!res.ok) {
+      throw new Error(`Could not get a session token (HTTP ${res.status}).`);
+    }
+
+    const data = await res.json();
+    if (!data.token) {
+      throw new Error('Session token missing from OpenTDB response.');
+    }
+
+    return data.token;
   }
 
   // ======================================================
   // TASK C: Fetch questions for the round
   // ======================================================
   async function fetchQuestions(cfg) {
-    // TODO:
-    // - build URL using API.questionsUrl(cfg.amount, cfg.difficulty, state.player.category, state.token)
-    // - fetch + await json
-    // - handle response_code:
-    //   0 -> return results
-    //   5 -> throw rate limit error
-    //   else -> throw generic error
-    return [];
+    const url = API.questionsUrl(
+      cfg.amount,
+      cfg.difficulty,
+      state.player.category,
+      state.token,
+    );
+    const res = await fetch(url);
+
+    // Rate limits come back as HTTP 429 with JSON response 5
+    // Read the body of the JSON before checking res.ok
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      throw new Error(`Could not load questions (HTTP ${res.status}).`);
+    }
+
+    if (data.response_code === 0) {
+      return data.results;
+    }
+
+    if (data.response_code === 5) {
+      throw new Error('Too many requests - wait 5 seconds and try again.');
+    }
+    throw new Error(`OpenTDB error (response_code ${data.response_code}).`);
   }
 
   // Display best score summary on Start screen
