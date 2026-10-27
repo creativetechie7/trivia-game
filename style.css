@@ -1,6 +1,6 @@
-/* ========================================================= 
+/* =========================================================
     Lab 6 - style.css starter
-    
+
     Task F:
       - Creative UX
       - You may customize colors, fonts, and button styles.
@@ -9,7 +9,9 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #0b1220;
+  background: radial-gradient(circle at top, #2b0f33 0%, #14081a 55%);
+  background-attachment: fixed;
+  min-height: 100vh;
   color: #eef2ff;
 }
 
@@ -20,8 +22,8 @@ main {
 }
 
 .card {
-  background: #121b2e;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: #1f0f26;
+  border: 1px solid rgba(245, 183, 0, 0.18);
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 14px;
@@ -39,7 +41,7 @@ select {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #0f172a;
+  background: #160a1c;
   color: #eef2ff;
 }
 
@@ -56,12 +58,12 @@ button {
 }
 
 button.primary {
-  background: #2563eb;
+  background: #c20000;
   color: white;
 }
 
 button.secondary {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
@@ -103,7 +105,7 @@ button:disabled {
 .notice {
   padding: 10px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.06);
 }
 
@@ -122,7 +124,11 @@ button:disabled {
 }
 
 .choiceBtn:hover {
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: #f5b700;
+}
+
+button.primary:hover {
+  background: #a30000;
 }
 
 .topbar {
@@ -131,4 +137,28 @@ button:disabled {
   gap: 10px;
   justify-content: space-between;
   align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.brand h1 {
+  margin: 0;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #c20000, #7f2982);
+  color: #f5b700;
+  font-size: 1.8rem;
+  font-weight: 800;
+  transform: rotate(-6deg);
 }

@@ -189,7 +189,6 @@
   // TASK B: Load best score from localStorage
   // ======================================================
   function loadProgress() {
-    // TODO: implement robust load:
     try {
       const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (parsed && typeof parsed === 'object') {
@@ -329,9 +328,8 @@
     // --------------------------------------------
     // Task E (Answer Review) — PARTIAL PROVIDED
     // --------------------------------------------
-    // TODO (students): Save the user's choice on the question object.
-    // Example:
-    // q.userChoice = choiceText;
+
+    q.userChoice = choiceText;
 
     if (choiceText === q.correct) {
       state.score = state.score + 1;
@@ -363,10 +361,7 @@
     // Task E (Answer Review) — PARTIAL PROVIDED
     // --------------------------------------------
     // We will build a multi-line string and show it in reviewBox.
-    // TODO: Finish the lines that show:
-    // - Your answer (qq.userChoice)
-    // - Correct answer (qq.correct)
-    // - A mark ✓ or ✗ depending on whether they match
+
     var lines = [];
     lines.push('Answer Review (Your answer vs Correct answer):');
     lines.push('');
@@ -376,12 +371,11 @@
       var qq = state.questions[i];
       lines.push(i + 1 + ') ' + qq.question);
 
-      // TODO: Add these lines and any ✓/✗ marking you want.
-      // HINT:
-      //  yourAns = qq.userChoice
-      //  ok = (yourAns === qq.correct)
-      //  use lines.push to show ✓ or ✗
+      const yourAns = qq.userChoice;
+      const ok = yourAns === qq.correct;
 
+      lines.push(`   Your answer: ${yourAns} ${ok ? '✓ Correct' : '✗ Wrong'}`);
+      lines.push(`   Correct: ${qq.correct}`);
       lines.push('');
     }
 
@@ -420,11 +414,7 @@
 
     startFromForm();
 
-    // --------------------------------------------------
-    // Task D (Difficulty selection)
-    // --------------------------------------------------
-    // TODO : Set (ROUND.difficulty) based on the dropdown selection (state - player - mode).
-    // The dropdown provides: "easy", "medium", or "hard"
+    ROUND.difficulty = state.player.mode;
 
     beginRound();
     showOnly(screenQuiz);
